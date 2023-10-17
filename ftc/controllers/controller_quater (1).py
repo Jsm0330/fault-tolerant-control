@@ -14,7 +14,7 @@ np.seterr(all="raise")
 
 class MyEnv(fym.BaseEnv):
     ang = np.deg2rad((0, 0, 10))
-    
+
     ENV_CONFIG = {
         "fkw": {
             "dt": 0.01,
@@ -58,9 +58,9 @@ class MyEnv(fym.BaseEnv):
         # ctrl, controller_info = self.controller.get_control(t,self)
         # forces = np.vstack((self.plant.m * self.plant.g, ctrl))
         # rotors = np.linalg.pinv(self.plant.mixer.B) @ forces
-        
-        ctrl, controller_info = self.controller.get_control(t,self)
-        
+
+        ctrl, controller_info = self.controller.get_control(t, self)
+
         self.plant.set_dot(t, ctrl)
         env_info = {
             "t": t,
@@ -198,9 +198,7 @@ def plot():
     ylabels = np.array((["R1", "R2"], ["R3", "R4"], ["R5", "R6"]))
     for i, _ylabel in np.ndenumerate(ylabels):
         ax = axes[i]
-        ax.plot(
-            data["t"], data["ctrl"].squeeze(-1)[:, sum(i)], "k-", label="Response"
-        )
+        ax.plot(data["t"], data["ctrl"].squeeze(-1)[:, sum(i)], "k-", label="Response")
         # ax.plot(
         #     data["t"], data["rotors0"].squeeze(-1)[:, sum(i)], "r--", label="Command"
         # )
@@ -216,6 +214,7 @@ def plot():
     fig.align_ylabels(axes)
 
     plt.show()
+
 
 def main(args):
     if args.only_plot:
