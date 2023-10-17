@@ -25,7 +25,7 @@ class MyEnv(fym.BaseEnv):
                 "pos": np.vstack((1, 2, 0)),
                 "vel": np.zeros((3, 1)),
                 "quat": angle2quat(ang[2], ang[1], ang[0]),
-                "omega": np.zeros((3, 1)),                
+                "omega": np.zeros((3, 1)),
             },
         },
     }
@@ -35,7 +35,7 @@ class MyEnv(fym.BaseEnv):
         super().__init__(**env_config["fkw"])  # == super().__init__(dt=0.01, max_t=20)
         self.plant = Multicopter(env_config["plant"])  # plant
         self.controller = ftc.make("LQR2", self)  # controller
- 
+
     def step(self):
         env_info, done = self.update()
         return done, env_info
@@ -50,12 +50,12 @@ class MyEnv(fym.BaseEnv):
         return [refs[key] for key in args]
 
     def set_dot(self, t):
-        ctrl, controller_info = self.controller.get_control(t,self)
+        ctrl, controller_info = self.controller.get_control(t, self)
 
         # ctrls, controller_info = self.controller.get_control(t, self)
-        # forces = np.vstack((self.plant.m * self.plant.g, ctrls)) 
+        # forces = np.vstack((self.plant.m * self.plant.g, ctrls))
         # rotors = np.linalg.inv(self.plant.mixer) @ forces
-        
+
         self.plant.set_dot(t, ctrl)
         env_info = {
             "t": t,
@@ -68,6 +68,7 @@ class MyEnv(fym.BaseEnv):
         }
 
         return env_info
+
 
 def run():
     env = MyEnv()
@@ -85,7 +86,8 @@ def run():
     finally:
         flogger.close()
         plot()
-            
+
+
 def plot():
     data = fym.load("data.h5")["env"]
 
@@ -189,9 +191,7 @@ def plot():
     ylabels = np.array((["R1", "R2"], ["R3", "R4"], ["R5", "R6"]))
     for i, _ylabel in np.ndenumerate(ylabels):
         ax = axes[i]
-        ax.plot(
-            data["t"], data["ctrl"].squeeze(-1)[:, sum(i)], "k-", label="Response"
-        )
+        ax.plot(data["t"], data["ctrl"].squeeze(-1)[:, sum(i)], "k-", label="Response")
         # ax.plot(
         #     data["t"], data["rotors0"].squeeze(-1)[:, sum(i)], "r--", label="Command"
         # )
@@ -207,6 +207,7 @@ def plot():
     fig.align_ylabels(axes)
 
     plt.show()
+
 
 def main(args):
     if args.only_plot:
