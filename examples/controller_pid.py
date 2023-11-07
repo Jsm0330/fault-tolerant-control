@@ -10,6 +10,7 @@ from ftc.utils import safeupdate
 
 np.seterr(all="raise")
 
+
 class MyEnv(fym.BaseEnv):
     ENV_CONFIG = {
         "fkw": {
@@ -46,7 +47,6 @@ class MyEnv(fym.BaseEnv):
         return [refs[key] for key in args]
 
     def set_dot(self, t):
-
         # rotors0 = self.plant.mixer(forces)
         # rotors = rotors0
         # self.plant.set_dot(t, rotors)
