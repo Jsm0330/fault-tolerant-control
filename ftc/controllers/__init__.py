@@ -44,3 +44,7 @@ register(
     id="LQR2",
     entry_point="ftc.controllers.LQR2.quadlqr:QUADLQRController",
 )
+register(
+    id="NDI2",
+    entry_point="ftc.controllers.NDI.ndi2:NDIController",
+)
