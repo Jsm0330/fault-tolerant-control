@@ -12,7 +12,7 @@ np.seterr(all="raise")
 class MyEnv(fym.BaseEnv):
     def __init__(self):
         super().__init__(dt=0.01, max_t=10)
-        x0 = np.vstack((5, 0))
+        x0 = np.vstack((1, 0))
         self.plant = fym.BaseSystem(x0)
         self.A = np.array([[0, 1], [0, 0]])
         self.B = np.vstack((0, 1))
